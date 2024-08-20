@@ -1,43 +1,44 @@
-# List of source files
-SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_memchr.c ft_memcmp.c \
+NAME        := libft
+CC        := gcc
+FLAGS    := -Wall -Wextra -Werror 
+
+SRCS := ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_memchr.c ft_memcmp.c \
       ft_strlen.c ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
       ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c ft_strncmp.c ft_strlcpy.c \
       ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strtrim.c \
       ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c \
       ft_putendl_fd.c ft_putnbr_fd.c ft_strjoin.c ft_strlcat.c ft_split.c main.c
 
-# Object files corresponding to source files
-OBJS = $(SRC:.c=.o)
+OBJS        := $(SRCS:.c=.o)
 
-# The name of the static library to create
-NAME = libft.a
+.c.o:
+	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
 
-# Compiler and flags
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-AR = ar rcs
+CLR_RMV		:= \033[0m
+RED		    := \033[1;31m
+GREEN		:= \033[1;32m
+YELLOW		:= \033[1;33m
+BLUE		:= \033[1;34m
+CYAN 		:= \033[1;36m
+RM		    := rm -f
 
-# Default target to build the static library
-all: $(NAME)
+${NAME}:	${OBJS}
+			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
+			${CC} ${FLAGS} -o ${NAME} ${OBJS}
+			@echo "$(GREEN)$(NAME) created[0m ✔️"
 
-# Rule to create the static library
-$(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
+all:		${NAME}
 
-# Rule to compile .c files into .o files
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+bonus:		all
 
-# Clean up object files and the static library
 clean:
-	rm -f $(OBJS)
+			@ ${RM} *.o */*.o */*/*.o
+			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)objs ✔️"
 
-# Clean up everything, including the static library
-fclean: clean
-	rm -f $(NAME)
+fclean:		clean
+			@ ${RM} ${NAME}
+			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)binary ✔️"
 
-# Rebuild everything from scratch
-re: fclean all
+re:			fclean all
 
-# Declaring these targets as phony to avoid conflicts with files named 'all', 'clean', etc.
-.PHONY: all clean fclean re
+.PHONY:		all clean fclean re
