@@ -6,9 +6,9 @@
 
 int main()
 {
-    printf("-----------------------");
+    printf("-----------------------\n");
     printf("ft_strlen(\"abc\"): %ld\nstrlen(\"abc\"): %ld\n",ft_strlen("abc"),strlen("abc"));
-    printf("-----------------------");
+    printf("-----------------------\n");
 
     printf("-----------------------\n");
     printf("ft_atoi(\"42\"): %d\natoi(\"42\"): %d\n", ft_atoi("42"), atoi("42"));
